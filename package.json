@@ -1,0 +1,37 @@
+{
+  "name": "ifetch-browser",
+  "version": "1.0.2",
+  "description": "fetch api for browser",
+  "main": "dist/ifetch.js",
+  "module": "dist/ifetch.es.js",
+  "browser": "dist/ifetch.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "keywords": [
+    "ifetch"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinhjaxt/ifetch-browser.git"
+  },
+  "author": "vinhjaxt",
+  "license": "ISC",
+  "dependencies": {
+    "query-string": "^6.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "rollup": "^0.66.2",
+    "rollup-plugin-babel": "3",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  }
+}
