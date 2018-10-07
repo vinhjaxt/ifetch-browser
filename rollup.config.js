@@ -9,7 +9,7 @@ export default [{
   output: {
     name: 'ifetch',
     file: pkg.browser,
-    format: 'iife',
+    format: 'umd',
     env: 'production'
   },
   plugins: [
