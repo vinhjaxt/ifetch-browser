@@ -124,7 +124,7 @@ const DEFAULT_OPTIONS = {
  */
 function ifetch (url, options) {
   try {
-    if ((url instanceof URL)) {
+    if (!(url instanceof URL)) {
       url = new URL(url);
     }
 
