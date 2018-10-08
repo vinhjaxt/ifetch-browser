@@ -1,6 +1,6 @@
 {
   "name": "ifetch-browser",
-  "version": "1.0.9",
+  "version": "1.10.1",
   "description": "fetch api for browser",
   "main": "dist/ifetch.js",
   "module": "dist/ifetch.es.js",
