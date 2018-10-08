@@ -154,8 +154,8 @@ function ifetch (url, options) {
     if (options.hasOwnProperty('json')) {
       genOptions.headers['Accept'] = 'application/json';
       if (options.method.toLowerCase() !== 'get') {
-        genOptions.headers['Content-Type'] = 'application/json';
         if (!options.body) {
+          genOptions.headers['Content-Type'] = 'application/json';
           genOptions.body = JSON.stringify(options.json);
         }
       }
