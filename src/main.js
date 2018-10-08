@@ -72,10 +72,9 @@ function ifetch (url, options) {
       delete options['data']
     }
 
-    options = util.merge({}, DEFAULT_OPTIONS, genOptions, options)
-
     options.referer = url.href
 
+    options = util.merge({}, DEFAULT_OPTIONS, genOptions, options)
     if (json && !noParseJSON) {
       return fetch(url, options).then(util.parseJSON)
     }
