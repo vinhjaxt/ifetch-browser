@@ -28,17 +28,19 @@ function ifetch (url, options) {
       url = new URL(url, location.href)
     }
 
-    let body
-    if (options) {
-      body = options.body
-      options = util.merge({}, DEFAULT_OPTIONS, options)
-    } else {
-      options = util.merge({}, DEFAULT_OPTIONS)
+    if (!options) options = {}
+
+    if (!util.isPlainObject(options)) {
+      throw new Error('options must be an object')
     }
 
     if (options.qs) {
       util.appendSearchParams(url, options.qs)
       delete options['qs']
+    }
+
+    const genOptions = {
+      headers: {}
     }
 
     let noParseJSON
@@ -50,11 +52,11 @@ function ifetch (url, options) {
     // json data
     let json = false
     if (options.hasOwnProperty('json')) {
-      options.headers['Accept'] = 'application/json'
+      genOptions.headers['Accept'] = 'application/json'
       if (options.method.toLowerCase() !== 'get') {
-        options.headers['Content-Type'] = 'application/json'
-        if (!body) {
-          options.body = JSON.stringify(options.json)
+        genOptions.headers['Content-Type'] = 'application/json'
+        if (!options.body) {
+          genOptions.body = JSON.stringify(options.json)
         }
       }
       delete options['json']
@@ -63,12 +65,14 @@ function ifetch (url, options) {
 
     // url encoded data
     if (options.data && util.isPlainObject(options.data)) {
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      if (!body) {
-        options.body = util.httpBuildQuery(options.data)
+      genOptions.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      if (!options.body) {
+        genOptions.body = util.httpBuildQuery(options.data)
       }
       delete options['data']
     }
+
+    options = util.merge({}, DEFAULT_OPTIONS, genOptions, options)
 
     options.referer = url.href
 
