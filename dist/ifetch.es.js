@@ -125,10 +125,12 @@ const DEFAULT_OPTIONS = {
 function ifetch (url, options) {
   try {
     if (!(url instanceof URL)) {
-      url = new URL(url);
+      url = new URL(url, location.href);
     }
 
+    let body;
     if (options) {
+      body = options.body;
       options = util.merge({}, DEFAULT_OPTIONS, options);
     } else {
       options = util.merge({}, DEFAULT_OPTIONS);
@@ -151,7 +153,9 @@ function ifetch (url, options) {
       options.headers['Accept'] = 'application/json';
       if (options.method.toLowerCase() !== 'get') {
         options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(options.json);
+        if (!body) {
+          options.body = JSON.stringify(options.json);
+        }
       }
       delete options['json'];
       json = true;
@@ -160,7 +164,9 @@ function ifetch (url, options) {
     // url encoded data
     if (options.data && util.isPlainObject(options.data)) {
       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      options.body = util.httpBuildQuery(options.data);
+      if (!body) {
+        options.body = util.httpBuildQuery(options.data);
+      }
       delete options['data'];
     }
 
